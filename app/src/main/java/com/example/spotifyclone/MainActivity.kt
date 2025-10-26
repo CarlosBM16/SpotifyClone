@@ -41,20 +41,24 @@ fun SongList() {
         SongData(ImageData(R.drawable.igtos, "Imaginations from the Other Side"), "Somewhere Far Beyond", "Blind Guardian", file),
         SongData(ImageData(R.drawable.igtos, "Imaginations from the Other Side"), "Imaginations from the Other Side (Reprise)", "Blind Guardian", file)
     )
-    Box(
-        modifier = Modifier.background(colorResource(R.color.bgColor))
-    ) {
-        LazyColumn {
-            items(lista) { cancion ->
-                SongCard(
-                    cancion,
-                    {}
-                )
+    Scaffold(
+        bottomBar = {
+            BottomBar(lista[1])
+        }
+    ) { paddingValues ->
+        Box(
+            modifier = Modifier.background(colorResource(R.color.bgColor))
+        ) {
+            LazyColumn {
+                items(lista) { cancion ->
+                    SongCard(
+                        cancion,
+                        {}
+                    )
+                }
             }
         }
     }
-
-
 }
 
 @Preview(showBackground = true)

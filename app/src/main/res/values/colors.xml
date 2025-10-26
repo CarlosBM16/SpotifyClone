@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="bgColor">#121212</color>
     <color name="textColor">#e1e1e1</color>
+    <color name="textGreenColor">#02bb5e</color>
+
 </resources>

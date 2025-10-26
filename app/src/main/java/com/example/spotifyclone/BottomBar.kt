@@ -1,0 +1,43 @@
+package com.example.spotifyclone
+
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.material.icons.filled.SkipNext
+import androidx.compose.material.icons.filled.SkipPrevious
+
+@Composable
+fun BottomBar(
+    currentSong : SongData
+) {
+    BottomAppBar(
+        containerColor = Color.Black,
+        contentColor = Color.White
+    ) {
+        IconButton(onClick = { /* TODO */ }) {
+            Icon(Icons.Filled.SkipPrevious, contentDescription = "Skip Previous")
+        }
+        IconButton(onClick = { /* TODO */ }) {
+            Icon(Icons.Filled.PlayArrow, contentDescription = "Play")
+        }
+        IconButton(onClick = { /* TODO */ }) {
+            Icon(Icons.Filled.SkipNext, contentDescription = "Skip Previous")
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun BottomBarPreview() {
+    val songTest = SongData(ImageData(R.drawable.igtos, "IFtOS"), "Imaginations from the Other Side", "Blind Guardian", R.raw.iftos)
+    BottomBar(songTest)
+}
