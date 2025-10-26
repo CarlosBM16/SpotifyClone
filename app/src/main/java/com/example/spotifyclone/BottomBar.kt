@@ -1,5 +1,6 @@
 package com.example.spotifyclone
 
+import android.media.MediaPlayer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
@@ -17,7 +18,8 @@ import androidx.compose.material.icons.filled.SkipPrevious
 
 @Composable
 fun BottomBar(
-    currentSong : SongData
+    currentSong : SongData,
+    mediaPlayer: MediaPlayer?
 ) {
     BottomAppBar(
         containerColor = Color.Black,
@@ -33,11 +35,4 @@ fun BottomBar(
             Icon(Icons.Filled.SkipNext, contentDescription = "Skip Previous")
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun BottomBarPreview() {
-    val songTest = SongData(ImageData(R.drawable.igtos, "IFtOS"), "Imaginations from the Other Side", "Blind Guardian", R.raw.iftos)
-    BottomBar(songTest)
 }

@@ -1,5 +1,7 @@
 package com.example.spotifyclone
 
+import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -18,19 +20,10 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.spotifyclone.ui.theme.SpotifyCloneTheme
 class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            SongList()
-        }
-    }
-}
-
-@Composable
-fun SongList() {
+    var mediaPlayer : MediaPlayer? = null
+    var songIndex = 0
     val file = R.raw.iftos
-    val lista = mutableListOf(
+    val songList = mutableListOf(
         SongData(ImageData(R.drawable.igtos, "Imaginations from the Other Side"), "Imaginations from the Other Side", "Blind Guardian", file),
         SongData(ImageData(R.drawable.igtos, "Imaginations from the Other Side"), "I'm Alive", "Blind Guardian", file),
         SongData(ImageData(R.drawable.igtos, "Imaginations from the Other Side"), "A Past and Future Secret", "Blind Guardian", file),
@@ -41,28 +34,27 @@ fun SongList() {
         SongData(ImageData(R.drawable.igtos, "Imaginations from the Other Side"), "Somewhere Far Beyond", "Blind Guardian", file),
         SongData(ImageData(R.drawable.igtos, "Imaginations from the Other Side"), "Imaginations from the Other Side (Reprise)", "Blind Guardian", file)
     )
-    Scaffold(
-        bottomBar = {
-            BottomBar(lista[1])
-        }
-    ) { paddingValues ->
-        Box(
-            modifier = Modifier.background(colorResource(R.color.bgColor))
-        ) {
-            LazyColumn {
-                items(lista) { cancion ->
-                    SongCard(
-                        cancion,
-                        {}
-                    )
-                }
-            }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        mediaPlayer = MediaPlayer()
+
+        setContent {
+            SongList(
+                lista = songList,
+                mediaPlayer = mediaPlayer ,
+                playSong = { file -> playSong(file)})
         }
     }
-}
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    SongList()
+    fun playSong(index: Int) {
+        songIndex = index
+        mediaPlayer?.let {
+            if (it.isPlaying) {
+                it.stop()
+            }
+            mediaPlayer = MediaPlayer.create(this, songList[songIndex].file)
+            mediaPlayer?.start()
+        }
+    }
 }

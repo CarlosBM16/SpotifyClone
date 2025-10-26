@@ -37,7 +37,8 @@ import com.example.spotifyclone.ui.theme.SpotifyCloneTheme
 @Composable
 fun SongCard(
     songData : SongData,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    mediaPlayer: MediaPlayer?
 ) {
     val context = LocalContext.current
     var isClicked by remember { mutableStateOf(false)}
@@ -49,8 +50,6 @@ fun SongCard(
             .padding(8.dp)
             .clickable {
                 isClicked = !isClicked
-                val mediaPlayer = MediaPlayer.create(context, songData.file)
-                mediaPlayer.start()
                 onClick()
             }
     ) {
@@ -92,5 +91,5 @@ fun SongCard(
 @Composable
 fun SongCardPreview() {
     val songTest = SongData(ImageData(R.drawable.igtos, "IFtOS"), "Imaginations from the Other Side", "Blind Guardian", R.raw.iftos)
-    SongCard(songTest, {})
+    SongCard(songTest, {}, MediaPlayer())
 }
