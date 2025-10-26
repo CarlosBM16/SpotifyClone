@@ -86,10 +86,3 @@ fun SongCard(
         }
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun SongCardPreview() {
-    val songTest = SongData(ImageData(R.drawable.igtos, "IFtOS"), "Imaginations from the Other Side", "Blind Guardian", R.raw.iftos)
-    SongCard(songTest, {}, MediaPlayer())
-}
