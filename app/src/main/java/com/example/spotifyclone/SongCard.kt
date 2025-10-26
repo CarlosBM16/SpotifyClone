@@ -1,6 +1,8 @@
 package com.example.spotifyclone
 
+import android.media.MediaPlayer
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,10 +18,14 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -32,12 +38,20 @@ fun SongCard(
     songData : SongData,
     onClick: () -> Unit
 ) {
+    val context = LocalContext.current
+    var isClicked by remember { mutableStateOf(false)}
     Card(
         colors = CardDefaults.cardColors(
             containerColor = colorResource(R.color.bgColor)
         ),
         modifier = Modifier
             .padding(8.dp)
+            .clickable {
+                isClicked = !isClicked
+                val mediaPlayer = MediaPlayer.create(context, songData.file)
+                mediaPlayer.start()
+                onClick()
+            }
     ) {
         Row (
             verticalAlignment = Alignment.CenterVertically
@@ -58,7 +72,10 @@ fun SongCard(
                 Text(
                     text = songData.title,
                     fontWeight = FontWeight.Bold,
-                    color = colorResource(R.color.textColor)
+                    color = if(isClicked)
+                        Color.Green
+                    else
+                        colorResource(R.color.textColor)
                 )
                 Spacer(modifier = Modifier.height(5.dp))
                 Text(
@@ -73,6 +90,6 @@ fun SongCard(
 @Preview(showBackground = true)
 @Composable
 fun SongCardPreview() {
-    val songTest = SongData(ImageData(R.drawable.igtos, "IFtOS"), "Imaginations from the Other Side", "Blind Guardian")
+    val songTest = SongData(ImageData(R.drawable.igtos, "IFtOS"), "Imaginations from the Other Side", "Blind Guardian", R.raw.iftos)
     SongCard(songTest, {})
 }
