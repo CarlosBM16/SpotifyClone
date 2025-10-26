@@ -42,8 +42,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             SongList(
                 lista = songList,
-                mediaPlayer = mediaPlayer ,
-                playSong = { file -> playSong(file)})
+                mediaPlayer = mediaPlayer,
+                playSong = { file -> playSong(file) },
+                pauseOrResume = { pauseOrResume() },
+                songIndex = songIndex
+            )
         }
     }
 
@@ -55,6 +58,17 @@ class MainActivity : ComponentActivity() {
             }
             mediaPlayer = MediaPlayer.create(this, songList[songIndex].file)
             mediaPlayer?.start()
+        }
+    }
+
+    fun pauseOrResume() {
+        mediaPlayer?.let {
+            if (it.isPlaying) {
+                it.pause()
+            } else {
+                it.start()
+            }
+
         }
     }
 }

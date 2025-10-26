@@ -15,11 +15,15 @@ import androidx.compose.ui.res.colorResource
 fun SongList(
     lista: List<SongData>,
     mediaPlayer: MediaPlayer?,
-    playSong: (Int) -> Unit
+    playSong: (Int) -> Unit,
+    pauseOrResume: () -> Unit,
+    songIndex : Int
 ) {
     Scaffold(
         bottomBar = {
-            BottomBar(lista[0], mediaPlayer)
+            BottomBar(
+                lista[songIndex],
+                pauseOrResume)
         }
     ) { paddingValues ->
         Box(

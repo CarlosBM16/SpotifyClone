@@ -18,8 +18,8 @@ import androidx.compose.material.icons.filled.SkipPrevious
 
 @Composable
 fun BottomBar(
-    currentSong : SongData,
-    mediaPlayer: MediaPlayer?
+    currentSong: SongData,
+    onPlayPause: () -> Unit
 ) {
     BottomAppBar(
         containerColor = Color.Black,
@@ -28,7 +28,7 @@ fun BottomBar(
         IconButton(onClick = { /* TODO */ }) {
             Icon(Icons.Filled.SkipPrevious, contentDescription = "Skip Previous")
         }
-        IconButton(onClick = { /* TODO */ }) {
+        IconButton(onClick = onPlayPause) {
             Icon(Icons.Filled.PlayArrow, contentDescription = "Play")
         }
         IconButton(onClick = { /* TODO */ }) {
