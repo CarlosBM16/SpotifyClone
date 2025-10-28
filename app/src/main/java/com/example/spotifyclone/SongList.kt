@@ -25,8 +25,6 @@ fun SongList(
     songIndex : Int,
     nextSong: () -> Unit
 ) {
-    var selectedSong by remember { mutableIntStateOf(-1) }
-
     Scaffold(
         bottomBar = {
             BottomBar(
@@ -48,10 +46,9 @@ fun SongList(
                         songData = song,
                         onClick = {
                             playSong(index)
-                            selectedSong = index
                         },
                         mediaPlayer = mediaPlayer,
-                        isSelected = selectedSong == index
+                        isSelected = songIndex == index
                     )
                 }
             }
