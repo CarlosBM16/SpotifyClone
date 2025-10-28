@@ -15,17 +15,21 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.spotifyclone.ui.theme.SpotifyCloneTheme
 class MainActivity : ComponentActivity() {
     var mediaPlayer : MediaPlayer? = null
-    var songIndex = 0
+    var songIndex by mutableIntStateOf(0)
     val file = R.raw.iftos
     val songList = mutableListOf(
         SongData(ImageData(R.drawable.igtos, "Imaginations from the Other Side"), "Imaginations from the Other Side", "Blind Guardian", file),
-        SongData(ImageData(R.drawable.igtos, "Imaginations from the Other Side"), "I'm Alive", "Blind Guardian", file),
+        SongData(ImageData(R.drawable.igtos, "Imaginations from the Other Side"), "I'm Alive", "Blind Guardian", R.raw.imalive),
         SongData(ImageData(R.drawable.igtos, "Imaginations from the Other Side"), "A Past and Future Secret", "Blind Guardian", file),
         SongData(ImageData(R.drawable.igtos, "Imaginations from the Other Side"), "The Script for My Requiem", "Blind Guardian", file),
         SongData(ImageData(R.drawable.igtos, "Imaginations from the Other Side"), "Terminal Exile", "Blind Guardian", file),
@@ -45,11 +49,11 @@ class MainActivity : ComponentActivity() {
                 mediaPlayer = mediaPlayer,
                 playSong = { file -> playSong(file) },
                 pauseOrResume = { pauseOrResume() },
-                songIndex = songIndex
+                songIndex = songIndex,
+                nextSong = { nextSong() }
             )
         }
     }
-
     fun playSong(index: Int) {
         songIndex = index
         mediaPlayer?.let {
@@ -71,4 +75,17 @@ class MainActivity : ComponentActivity() {
 
         }
     }
+
+    fun nextSong() {
+        songIndex = (songIndex + 1) % songList.size
+        mediaPlayer?.let {
+            if (it.isPlaying) {
+                it.stop()
+            }
+            it.release()
+        }
+        mediaPlayer = MediaPlayer.create(this, songList[songIndex].file)
+        mediaPlayer?.start()
+    }
+
 }

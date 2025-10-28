@@ -23,7 +23,8 @@ import androidx.compose.ui.Alignment
 @Composable
 fun BottomBar(
     currentSong: SongData,
-    onPlayPause: () -> Unit
+    onPlayPause: () -> Unit,
+    nextSong: () -> Unit
 ) {
     BottomAppBar(
         containerColor = Color.Black,
@@ -32,7 +33,7 @@ fun BottomBar(
         Row (
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.Bottom
         ){
             IconButton(onClick = { /* TODO */ }) {
                 Icon(Icons.Filled.SkipPrevious, contentDescription = "Skip Previous")
@@ -40,8 +41,8 @@ fun BottomBar(
             IconButton(onClick = onPlayPause) {
                 Icon(Icons.Filled.PlayArrow, contentDescription = "Play")
             }
-            IconButton(onClick = { /* TODO */ }) {
-                Icon(Icons.Filled.SkipNext, contentDescription = "Skip Previous")
+            IconButton(onClick =  nextSong ) {
+                Icon(Icons.Filled.SkipNext, contentDescription = "Skip Next")
             }
         }
 

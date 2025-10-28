@@ -8,6 +8,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 
@@ -17,13 +22,18 @@ fun SongList(
     mediaPlayer: MediaPlayer?,
     playSong: (Int) -> Unit,
     pauseOrResume: () -> Unit,
-    songIndex : Int
+    songIndex : Int,
+    nextSong: () -> Unit
 ) {
+    var selectedSong by remember { mutableIntStateOf(-1) }
+
     Scaffold(
         bottomBar = {
             BottomBar(
                 lista[songIndex],
-                pauseOrResume)
+                pauseOrResume,
+                nextSong
+            )
         }
     ) { paddingValues ->
         Box(
@@ -36,8 +46,12 @@ fun SongList(
                     val song = lista[index]
                     SongCard(
                         songData = song,
-                        onClick = { playSong(index) },
-                        mediaPlayer = mediaPlayer
+                        onClick = {
+                            playSong(index)
+                            selectedSong = index
+                        },
+                        mediaPlayer = mediaPlayer,
+                        isSelected = selectedSong == index
                     )
                 }
             }

@@ -38,10 +38,10 @@ import com.example.spotifyclone.ui.theme.SpotifyCloneTheme
 fun SongCard(
     songData : SongData,
     onClick: () -> Unit,
-    mediaPlayer: MediaPlayer?
+    mediaPlayer: MediaPlayer?,
+    isSelected: Boolean
 ) {
     val context = LocalContext.current
-    var isClicked by remember { mutableStateOf(false)}
     Card(
         colors = CardDefaults.cardColors(
             containerColor = colorResource(R.color.bgColor)
@@ -49,7 +49,6 @@ fun SongCard(
         modifier = Modifier
             .padding(8.dp)
             .clickable {
-                isClicked = !isClicked
                 onClick()
             }
     ) {
@@ -72,7 +71,7 @@ fun SongCard(
                 Text(
                     text = songData.title,
                     fontWeight = FontWeight.Bold,
-                    color = if(isClicked)
+                    color = if(isSelected)
                         colorResource(R.color.textGreenColor)
                     else
                         colorResource(R.color.textColor)
