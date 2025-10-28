@@ -50,7 +50,8 @@ class MainActivity : ComponentActivity() {
                 playSong = { file -> playSong(file) },
                 pauseOrResume = { pauseOrResume() },
                 songIndex = songIndex,
-                nextSong = { nextSong() }
+                nextSong = { nextSong() },
+                previousSong = { previousSong() }
             )
         }
     }
@@ -88,4 +89,20 @@ class MainActivity : ComponentActivity() {
         mediaPlayer?.start()
     }
 
+    fun previousSong() {
+        songIndex = if ((songIndex - 1) < 0) {
+            songList.size  - 1
+        } else {
+            songIndex - 1
+        }
+
+        mediaPlayer?.let {
+            if (it.isPlaying) {
+                it.stop()
+            }
+            it.release()
+        }
+        mediaPlayer = MediaPlayer.create(this, songList[songIndex].file)
+        mediaPlayer?.start()
+    }
 }

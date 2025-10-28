@@ -23,14 +23,16 @@ fun SongList(
     playSong: (Int) -> Unit,
     pauseOrResume: () -> Unit,
     songIndex : Int,
-    nextSong: () -> Unit
+    nextSong: () -> Unit,
+    previousSong: () -> Unit
 ) {
     Scaffold(
         bottomBar = {
             BottomBar(
                 lista[songIndex],
                 pauseOrResume,
-                nextSong
+                nextSong,
+                previousSong
             )
         }
     ) { paddingValues ->

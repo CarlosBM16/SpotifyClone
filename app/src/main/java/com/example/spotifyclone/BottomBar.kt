@@ -24,7 +24,8 @@ import androidx.compose.ui.Alignment
 fun BottomBar(
     currentSong: SongData,
     onPlayPause: () -> Unit,
-    nextSong: () -> Unit
+    nextSong: () -> Unit,
+    previousSong: () -> Unit
 ) {
     BottomAppBar(
         containerColor = Color.Black,
@@ -35,7 +36,7 @@ fun BottomBar(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.Bottom
         ){
-            IconButton(onClick = { /* TODO */ }) {
+            IconButton(onClick = previousSong) {
                 Icon(Icons.Filled.SkipPrevious, contentDescription = "Skip Previous")
             }
             IconButton(onClick = onPlayPause) {
