@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 
 class MainActivity : ComponentActivity() {
@@ -24,6 +25,8 @@ class MainActivity : ComponentActivity() {
         SongData(ImageData(R.drawable.avengedsevenfold, "Avenged Sevenfold"), "A Little Piece Of Heaven", "Avenged Sevenfold", R.raw.alittlepieaceofheaven),
         SongData(ImageData(R.drawable.somewhereintime, "Somewhere in Time"), "Wasted Years", "Iron Maiden", R.raw.wastedyears)
     )
+    var isPlaying by mutableStateOf(false)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -37,7 +40,8 @@ class MainActivity : ComponentActivity() {
                 pauseOrResume = { pauseOrResume() },
                 songIndex = songIndex,
                 nextSong = { nextSong() },
-                previousSong = { previousSong() }
+                previousSong = { previousSong()},
+                isPlaying = isPlaying
             )
         }
     }
@@ -50,14 +54,17 @@ class MainActivity : ComponentActivity() {
             mediaPlayer = MediaPlayer.create(this, songList[songIndex].file)
             mediaPlayer?.start()
         }
+        isPlaying = true
     }
 
     fun pauseOrResume() {
         mediaPlayer?.let {
             if (it.isPlaying) {
                 it.pause()
+                isPlaying = false
             } else {
                 it.start()
+                isPlaying = true
             }
 
         }
@@ -73,6 +80,7 @@ class MainActivity : ComponentActivity() {
         }
         mediaPlayer = MediaPlayer.create(this, songList[songIndex].file)
         mediaPlayer?.start()
+        isPlaying = true
     }
 
     fun previousSong() {
@@ -90,5 +98,6 @@ class MainActivity : ComponentActivity() {
         }
         mediaPlayer = MediaPlayer.create(this, songList[songIndex].file)
         mediaPlayer?.start()
+        isPlaying = true
     }
 }
